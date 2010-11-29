@@ -1,0 +1,24 @@
+To use this bit of code, I assume you have a LAMP, WAMP, or MAMP stack already in place.
+If you don't, you should go find a way to get that done.  If you pay for PHP hosting, you already have it.
+Your PHP should have the php5-curl library installed as well.
+
+You need access to a MySQL database with a username and password.
+
+If you need to create one, you can use something like this:
+
+CREATE DATABASE my_facebook_friends;
+GRANT ALL PRIVILEGES ON my_facebook_friends.* TO "fb_db_user"@"localhost" IDENTIFIED BY "this_secure_password_12345";
+FLUSH PRIVILEGES;
+EXIT;
+
+Edit config.php to reflect your actual server, usernames, and passwords, and other data.  Alternately, you can copy config to config_local.php and edit your data there allowing you some flexibility.
+
+Run db_create.php (however you like) after you have added your config data and it will create tables for you.
+
+Run update.php (however you like, as often as you like) as your last step to pull data from Facebook and update your database.
+I like have a cron job run it every minute, so you can just:
+crontab -e
+
+MAILTO=""
+# m h  dom mon dow   command
+* * * * * curl localhost/update.php
